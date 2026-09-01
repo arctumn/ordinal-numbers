@@ -30,7 +30,7 @@ function inflect(phrase: string, options?: OrdinalOptions): string {
     .join(' ');
 }
 
-export const pt: OrdinalLocale = {
+export const ptPT: OrdinalLocale = {
   code: 'pt-PT',
   aliases: ['pt', 'pt-BR', 'pt-AO', 'pt-MZ'],
   min: 1,

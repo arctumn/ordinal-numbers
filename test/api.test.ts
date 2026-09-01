@@ -13,7 +13,12 @@ describe('locale resolution', () => {
     expect(resolveLocale('PT-pt').code).toBe('pt-PT');
   });
 
-  it('falls back to the bare language subtag', () => {
+  it('accepts the bare language subtag as an alias', () => {
+    expect(resolveLocale('pt').code).toBe('pt-PT');
+    expect(resolveLocale('en').code).toBe('en-US');
+  });
+
+  it('falls back to the bare language subtag for unlisted regions', () => {
     expect(resolveLocale('pt-CV').code).toBe('pt-PT');
     expect(resolveLocale('en-GB').code).toBe('en-US');
   });

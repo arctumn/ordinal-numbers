@@ -56,11 +56,12 @@ Ortográfico. Pass `{ dot: false }` for the common `1º`.
 `plural: boolean` (default `false`), `dot: boolean` (default `true`).
 
 **Range** — each locale spells out 1 to 999,999,999. Outside that, the functions
-fall back to the numeric form (`getOrdinalWord(0, 'en')` is `'0th'`) rather than
+fall back to the numeric form (`getOrdinalWord(0, 'en-US')` is `'0th'`) rather than
 throwing. A non-integer throws a `TypeError`.
 
-**Locale resolution** — exact tag, then the bare language subtag (`pt-CV` → `pt-PT`),
-then `en-US`.
+**Locale resolution** — the canonical tags are `en-US` and `pt-PT`. Resolution tries
+the exact tag, then its registered aliases (`en`, `en-GB`, …; `pt`, `pt-BR`, …), then
+the bare language subtag (`pt-CV` → `pt-PT`), then `en-US`.
 
 ## Why locales are plugins, not rows in one table
 

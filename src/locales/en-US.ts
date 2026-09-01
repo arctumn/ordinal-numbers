@@ -75,7 +75,7 @@ function ordinalizePhrase(phrase: string): string {
   return words.join(' ');
 }
 
-export const en: OrdinalLocale = {
+export const enUS: OrdinalLocale = {
   code: 'en-US',
   aliases: ['en', 'en-GB', 'en-AU', 'en-CA', 'en-IE', 'en-NZ', 'en-ZA'],
   min: 1,

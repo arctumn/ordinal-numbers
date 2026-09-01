@@ -1,10 +1,10 @@
 import type { OrdinalLocale, OrdinalOptions } from './types';
-import { en } from './locales/en';
-import { pt } from './locales/pt';
+import { enUS } from './locales/en-US';
+import { ptPT } from './locales/pt-PT';
 
 export type { Gender, OrdinalLocale, OrdinalOptions } from './types';
-export { en } from './locales/en';
-export { pt } from './locales/pt';
+export { enUS } from './locales/en-US';
+export { ptPT } from './locales/pt-PT';
 
 const DEFAULT_LOCALE = 'en-US';
 
@@ -16,8 +16,8 @@ export function registerLocale(locale: OrdinalLocale): void {
   for (const alias of locale.aliases) registry.set(alias.toLowerCase(), locale);
 }
 
-registerLocale(en);
-registerLocale(pt);
+registerLocale(enUS);
+registerLocale(ptPT);
 
 /** Every tag the registry answers to, sorted. */
 export function getSupportedLocales(): string[] {

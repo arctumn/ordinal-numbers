@@ -45,7 +45,7 @@ describe('en-US words', () => {
 
 describe('en-US numeric', () => {
   it('picks the right suffix', () => {
-    expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 23, 101, 111, 112].map((n) => getOrdinalNumeric(n, 'en')))
+    expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 23, 101, 111, 112].map((n) => getOrdinalNumeric(n, 'en-US')))
       .toEqual([
         '1st', '2nd', '3rd', '4th', '11th', '12th', '13th',
         '21st', '22nd', '23rd', '101st', '111th', '112th'
