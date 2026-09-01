@@ -1,7 +1,7 @@
 {
   "name": "ordinal-words",
   "version": "1.0.0",
-  "description": "Ordinal numbers in words and in numeric form, across locales (en, pt-PT) — with gender and plural support",
+  "description": "Ordinal numbers as text writes them (21.º, 21st) or spelled out (vigésimo primeiro, twenty-first) — pt-PT and en-US, gender and plural aware, zero dependencies",
   "keywords": [
     "ordinal",
     "ordinals",
@@ -12,18 +12,19 @@
     "locale",
     "portuguese",
     "pt-PT",
-    "english"
+    "english",
+    "en-US"
   ],
   "license": "ISC",
   "author": "Pedro Lopes",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arctumn/ordinal-numbers.git"
+    "url": "git+https://github.com/arctumn/ordinal-words.git"
   },
   "bugs": {
-    "url": "https://github.com/arctumn/ordinal-numbers/issues"
+    "url": "https://github.com/arctumn/ordinal-words/issues"
   },
-  "homepage": "https://github.com/arctumn/ordinal-numbers#readme",
+  "homepage": "https://github.com/arctumn/ordinal-words#readme",
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

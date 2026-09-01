@@ -1,6 +1,6 @@
 # ordinal-words
 
-[![CI](https://github.com/arctumn/ordinal-numbers/actions/workflows/ci.yml/badge.svg)](https://github.com/arctumn/ordinal-numbers/actions/workflows/ci.yml)
+[![CI](https://github.com/arctumn/ordinal-words/actions/workflows/ci.yml/badge.svg)](https://github.com/arctumn/ordinal-words/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/ordinal-words)](https://www.npmjs.com/package/ordinal-words)
 
 Ordinal numbers in the form text actually uses — `21.º`, `21st` — and spelled out
