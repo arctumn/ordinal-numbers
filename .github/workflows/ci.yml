@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 22.18 is the floor declared in engines: the first release where Node
+        # strips TypeScript types without a flag, which the test script needs.
+        node: ['22.18', '22', '24']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify the built package installs and runs
+        run: |
+          npm pack --pack-destination /tmp
+          mkdir -p /tmp/consumer && cd /tmp/consumer
+          echo '{"name":"consumer","private":true,"type":"module","version":"1.0.0"}' > package.json
+          npm install /tmp/ordinal-words-*.tgz
+          node --input-type=module -e "
+            import { registerLocale, getOrdinal, getOrdinalWord } from 'ordinal-words';
+            import { ptPT } from 'ordinal-words/locales/pt-PT';
+            import assert from 'node:assert/strict';
+            registerLocale(ptPT);
+            assert.equal(getOrdinal(21), '21.º');
+            assert.equal(getOrdinalWord(21), 'vigésimo primeiro');
+            assert.throws(() => getOrdinal(1, 'en-US'), { name: 'RangeError' });
+            console.log('package installs and runs');
+          "

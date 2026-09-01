@@ -1,5 +1,8 @@
 # ordinal-words
 
+[![CI](https://github.com/arctumn/ordinal-numbers/actions/workflows/ci.yml/badge.svg)](https://github.com/arctumn/ordinal-numbers/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/ordinal-words)](https://www.npmjs.com/package/ordinal-words)
+
 Ordinal numbers in the form text actually uses — `21.º`, `21st` — and spelled out
 in full when you want that — `vigésimo primeiro`, `twenty-first`.
 
@@ -132,6 +135,23 @@ npm run build       # tsc into dist/esm and dist/cjs, no bundler
 The only dev dependencies are `typescript` and `@types/node`. Tests run on Node's
 built-in runner against the TypeScript sources directly, using Node's native type
 stripping — hence `engines: node >= 22.18`.
+
+CI runs the same three commands on Node 22.18, 22 and 24, then packs the tarball
+and installs it into a throwaway project to check the published shape actually
+resolves.
+
+## Releasing
+
+Publishing runs from CI through npm's trusted publishing, so no npm token is
+stored anywhere:
+
+```bash
+npm version patch   # or minor / major — writes package.json and tags
+git push --follow-tags
+```
+
+The tag triggers `.github/workflows/release.yml`, which refuses to publish if the
+tag and `package.json` disagree, then publishes with build provenance.
 
 ## pt-PT: multiples of a thousand
 
