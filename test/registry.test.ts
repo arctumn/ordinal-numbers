@@ -49,6 +49,13 @@ describe('registration', () => {
     assert.throws(() => setDefaultLocale('fr-FR'), { name: 'RangeError' });
   });
 
+  it('lists tags in the casing each locale declares', () => {
+    assert.deepEqual(getSupportedLocales(), [
+      'en', 'en-AU', 'en-CA', 'en-GB', 'en-IE', 'en-NZ', 'en-US', 'en-ZA',
+      'pt', 'pt-AO', 'pt-BR', 'pt-MZ', 'pt-PT'
+    ]);
+  });
+
   it('registers the canonical code and every alias', () => {
     assert.equal(resolveLocale('pt-PT').code, 'pt-PT');
     assert.equal(resolveLocale('PT-pt').code, 'pt-PT');

@@ -76,9 +76,19 @@ export function getDefaultLocale(): string | undefined {
   return defaultTag === undefined ? undefined : registry.get(defaultTag)?.code;
 }
 
-/** Every tag the registry answers to, sorted. Empty before the first registration. */
+/**
+ * Every tag the registry answers to, sorted, in the casing each locale declares
+ * — the registry keys are lower-cased so lookup ignores case, but that is an
+ * implementation detail and BCP 47 tags are written 'pt-PT', not 'pt-pt'.
+ * Empty before the first registration.
+ */
 export function getSupportedLocales(): string[] {
-  return [...registry.keys()].sort();
+  const tags = new Set<string>();
+  for (const locale of new Set(registry.values())) {
+    tags.add(locale.code);
+    for (const alias of locale.aliases) tags.add(alias);
+  }
+  return [...tags].sort();
 }
 
 /**
