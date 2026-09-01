@@ -113,9 +113,24 @@ function assertInteger(value: number): void {
 }
 
 /**
- * Spells a number out as an ordinal.
+ * The ordinal in its everyday written form: the digits plus the locale's
+ * indicator. This is the form most text actually uses — "21.º", not "vigésimo
+ * primeiro" — so it is the one to reach for by default. Use
+ * {@link getOrdinalWord} when you specifically want it spelled out.
  *
- * Outside the locale's supported range the numeric form is returned instead,
+ * @example getOrdinal(21, 'pt-PT')                        // '21.º'
+ * @example getOrdinal(21, 'pt-PT', { gender: 'feminine' }) // '21.ª'
+ * @example getOrdinal(21, 'en-US')                        // '21st'
+ */
+export function getOrdinal(value: number, locale?: string, options?: OrdinalOptions): string {
+  assertInteger(value);
+  return `${value}${resolveLocale(locale).suffix(value, options)}`;
+}
+
+/**
+ * Spells the ordinal out in words.
+ *
+ * Outside the locale's supported range it falls back to {@link getOrdinal},
  * so the function never throws on a valid integer in a registered locale.
  *
  * @example getOrdinalWord(21, 'en-US')                        // 'twenty-first'
@@ -130,18 +145,6 @@ export function getOrdinalWord(value: number, locale?: string, options?: Ordinal
     return `${value}${target.suffix(value, options)}`;
   }
   return target.toWords(value, options);
-}
-
-/**
- * The digits plus the locale's ordinal indicator.
- *
- * @example getOrdinalNumeric(21, 'en-US')                        // '21st'
- * @example getOrdinalNumeric(21, 'pt-PT')                        // '21.º'
- * @example getOrdinalNumeric(21, 'pt-PT', { gender: 'feminine' }) // '21.ª'
- */
-export function getOrdinalNumeric(value: number, locale?: string, options?: OrdinalOptions): string {
-  assertInteger(value);
-  return `${value}${resolveLocale(locale).suffix(value, options)}`;
 }
 
 /**

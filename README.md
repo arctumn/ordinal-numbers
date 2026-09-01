@@ -1,7 +1,7 @@
 # ordinal-words
 
-Ordinal numbers in words (`twenty-first`, `vigésimo primeiro`) and in numeric form
-(`21st`, `21.º`), across locales.
+Ordinal numbers in the form text actually uses — `21.º`, `21st` — and spelled out
+in full when you want that — `vigésimo primeiro`, `twenty-first`.
 
 Zero runtime dependencies, two dev dependencies (TypeScript and its Node types), ESM + CJS, typed.
 **You register the locales you want** — the library ships none by default and never
@@ -19,17 +19,17 @@ Register a locale first. Each one lives at its own entry point, so importing one
 never pulls in the others.
 
 ```ts
-import { registerLocale, getOrdinalWord, getOrdinalNumeric, getOrdinalSuffix } from 'ordinal-words';
+import { registerLocale, getOrdinal, getOrdinalWord, getOrdinalSuffix } from 'ordinal-words';
 import { ptPT } from 'ordinal-words/locales/pt-PT';
 
 registerLocale(ptPT);
 
-getOrdinalWord(21, 'pt-PT');    // 'vigésimo primeiro'
-getOrdinalNumeric(21, 'pt-PT'); // '21.º'
-getOrdinalSuffix(2, 'pt-PT');   // '.º'
+getOrdinal(21, 'pt-PT');      // '21.º'   <- the everyday form, and the one to reach for
+getOrdinalWord(21, 'pt-PT');  // 'vigésimo primeiro'   <- when you want it spelled out
+getOrdinalSuffix(21, 'pt-PT') // '.º'     <- when you render the digits yourself
 
-getOrdinalWord(21);             // 'vigésimo primeiro' — the first locale registered is the default
-getOrdinalWord(21, 'en-US');    // RangeError: No locale registered for "en-US". Registered: pt-PT.
+getOrdinal(21);               // '21.º' — the first locale registered is the default
+getOrdinal(21, 'en-US');      // RangeError: No locale registered for "en-US". Registered: pt-PT.
 ```
 
 Add English the same way:
@@ -38,8 +38,9 @@ Add English the same way:
 import { enUS } from 'ordinal-words/locales/en-US';
 
 registerLocale(enUS);
-getOrdinalWord(21, 'en-US');    // 'twenty-first'
-getOrdinalNumeric(21, 'en-US'); // '21st'
+
+getOrdinal(21, 'en-US');      // '21st'
+getOrdinalWord(21, 'en-US');  // 'twenty-first'
 ```
 
 Nothing is registered implicitly, and an unregistered tag throws a `RangeError`
@@ -53,8 +54,8 @@ Portuguese ordinals inflect. English ones do not, so the options are ignored the
 getOrdinalWord(21, 'pt-PT', { gender: 'feminine' });               // 'vigésima primeira'
 getOrdinalWord(3,  'pt-PT', { gender: 'feminine', plural: true }); // 'terceiras'
 
-getOrdinalNumeric(1, 'pt-PT', { gender: 'feminine' });  // '1.ª'
-getOrdinalNumeric(3, 'pt-PT', { dot: false });          // '3º'
+getOrdinal(1, 'pt-PT', { gender: 'feminine' });  // '1.ª'
+getOrdinal(3, 'pt-PT', { dot: false });          // '3º'
 ```
 
 The numeric form defaults to `1.º`, the spelling prescribed by the Acordo
@@ -70,8 +71,8 @@ Ortográfico. Pass `{ dot: false }` for the common `1º`.
 | `getDefaultLocale()` | the current default's canonical code, or `undefined` |
 | `getSupportedLocales()` | every tag the registry answers to; empty before the first registration |
 | `resolveLocale(tag?)` | the `OrdinalLocale` a tag resolves to |
+| `getOrdinal(value, locale?, options?)` | the digits plus the indicator — the default choice |
 | `getOrdinalWord(value, locale?, options?)` | the ordinal spelled out |
-| `getOrdinalNumeric(value, locale?, options?)` | the digits plus the indicator |
 | `getOrdinalSuffix(value, locale?, options?)` | the indicator alone |
 
 Omitting `locale` uses the default locale.

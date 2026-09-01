@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  getOrdinalNumeric,
+  getOrdinal,
   getOrdinalSuffix,
   getOrdinalWord,
     registerLocale
@@ -63,13 +63,13 @@ describe('pt-PT words', () => {
 
 describe('pt-PT numeric', () => {
   it('uses the ordinal indicator with the Acordo Ortográfico dot', () => {
-    assert.equal(getOrdinalNumeric(1, 'pt-PT'), '1.º');
-    assert.equal(getOrdinalNumeric(1, 'pt-PT', { gender: 'feminine' }), '1.ª');
-    assert.equal(getOrdinalNumeric(2, 'pt-PT', { plural: true }), '2.ºs');
+    assert.equal(getOrdinal(1, 'pt-PT'), '1.º');
+    assert.equal(getOrdinal(1, 'pt-PT', { gender: 'feminine' }), '1.ª');
+    assert.equal(getOrdinal(2, 'pt-PT', { plural: true }), '2.ºs');
   });
 
   it('drops the dot on request', () => {
-    assert.equal(getOrdinalNumeric(3, 'pt-PT', { dot: false }), '3º');
+    assert.equal(getOrdinal(3, 'pt-PT', { dot: false }), '3º');
     assert.equal(getOrdinalSuffix(3, 'pt-PT', { dot: false, gender: 'feminine' }), 'ª');
   });
 });
