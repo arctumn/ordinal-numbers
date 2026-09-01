@@ -1,6 +1,6 @@
 {
   "name": "ordinal-words",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Ordinal numbers as text writes them (21.º, 21st) or spelled out (vigésimo primeiro, twenty-first) — pt-PT and en-US, gender and plural aware, zero dependencies",
   "keywords": [
     "ordinal",
