@@ -1,0 +1,65 @@
+{
+  "name": "ordinal-words",
+  "version": "1.0.0",
+  "description": "Ordinal numbers in words and in numeric form, across locales (en, pt-PT) — with gender and plural support",
+  "keywords": [
+    "ordinal",
+    "ordinals",
+    "ordinal-numbers",
+    "number-to-words",
+    "i18n",
+    "l10n",
+    "locale",
+    "portuguese",
+    "pt-PT",
+    "english"
+  ],
+  "license": "ISC",
+  "author": "Pedro Lopes",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arctumn/ordinal-numbers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arctumn/ordinal-numbers/issues"
+  },
+  "homepage": "https://github.com/arctumn/ordinal-numbers#readme",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
