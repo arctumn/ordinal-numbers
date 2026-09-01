@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "lib": ["ES2022"],
-    "declaration": true,
     "strict": true,
-    "noUncheckedIndexedAccess": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "verbatimModuleSyntax": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
     "skipLibCheck": true,
-    "verbatimModuleSyntax": true,
     "noEmit": true
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "scripts"]
 }

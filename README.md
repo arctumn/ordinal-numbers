@@ -1,7 +1,11 @@
 # ordinal-words
 
 Ordinal numbers in words (`twenty-first`, `vigésimo primeiro`) and in numeric form
-(`21st`, `21.º`), across locales. Zero runtime dependencies, ESM + CJS, typed.
+(`21st`, `21.º`), across locales.
+
+Zero runtime dependencies, two dev dependencies (TypeScript and its Node types), ESM + CJS, typed.
+**You register the locales you want** — the library ships none by default and never
+falls back to a language you did not ask for.
 
 ## Install
 
@@ -11,18 +15,35 @@ npm install ordinal-words
 
 ## Usage
 
+Register a locale first. Each one lives at its own entry point, so importing one
+never pulls in the others.
+
 ```ts
-import { getOrdinalWord, getOrdinalNumeric, getOrdinalSuffix } from 'ordinal-words';
+import { registerLocale, getOrdinalWord, getOrdinalNumeric, getOrdinalSuffix } from 'ordinal-words';
+import { ptPT } from 'ordinal-words/locales/pt-PT';
 
-getOrdinalWord(21, 'en-US');   // 'twenty-first'
-getOrdinalWord(21, 'pt-PT');   // 'vigésimo primeiro'
-getOrdinalWord(1_234_567);     // 'one million two hundred thirty-four thousand five hundred sixty-seventh'
+registerLocale(ptPT);
 
-getOrdinalNumeric(21, 'en-US'); // '21st'
+getOrdinalWord(21, 'pt-PT');    // 'vigésimo primeiro'
 getOrdinalNumeric(21, 'pt-PT'); // '21.º'
+getOrdinalSuffix(2, 'pt-PT');   // '.º'
 
-getOrdinalSuffix(2, 'en-US');   // 'nd'
+getOrdinalWord(21);             // 'vigésimo primeiro' — the first locale registered is the default
+getOrdinalWord(21, 'en-US');    // RangeError: No locale registered for "en-US". Registered: pt-PT.
 ```
+
+Add English the same way:
+
+```ts
+import { enUS } from 'ordinal-words/locales/en-US';
+
+registerLocale(enUS);
+getOrdinalWord(21, 'en-US');    // 'twenty-first'
+getOrdinalNumeric(21, 'en-US'); // '21st'
+```
+
+Nothing is registered implicitly, and an unregistered tag throws a `RangeError`
+naming what *is* registered rather than silently answering in another language.
 
 ### Gender and plural
 
@@ -43,25 +64,28 @@ Ortográfico. Pass `{ dot: false }` for the common `1º`.
 
 | Function | Returns |
 | --- | --- |
+| `registerLocale(locale)` | adds or replaces a locale; the first one becomes the default |
+| `unregisterLocale(locale \| tag)` | removes it and every tag pointing at it; `false` if it was not registered |
+| `setDefaultLocale(tag)` | chooses the locale used when a call omits one |
+| `getDefaultLocale()` | the current default's canonical code, or `undefined` |
+| `getSupportedLocales()` | every tag the registry answers to; empty before the first registration |
+| `resolveLocale(tag?)` | the `OrdinalLocale` a tag resolves to |
 | `getOrdinalWord(value, locale?, options?)` | the ordinal spelled out |
 | `getOrdinalNumeric(value, locale?, options?)` | the digits plus the indicator |
 | `getOrdinalSuffix(value, locale?, options?)` | the indicator alone |
-| `resolveLocale(tag?)` | the `OrdinalLocale` a tag resolves to |
-| `registerLocale(locale)` | adds or replaces a locale |
-| `getSupportedLocales()` | every tag the registry answers to |
 
-`locale` defaults to `'en-US'`.
+Omitting `locale` uses the default locale.
 
 **Options** — `gender: 'masculine' | 'feminine'` (default masculine),
 `plural: boolean` (default `false`), `dot: boolean` (default `true`).
 
 **Range** — each locale spells out 1 to 999,999,999. Outside that, the functions
-fall back to the numeric form (`getOrdinalWord(0, 'en-US')` is `'0th'`) rather than
+fall back to the numeric form (`getOrdinalWord(0, 'pt-PT')` is `'0.º'`) rather than
 throwing. A non-integer throws a `TypeError`.
 
 **Locale resolution** — the canonical tags are `en-US` and `pt-PT`. Resolution tries
 the exact tag, then its registered aliases (`en`, `en-GB`, …; `pt`, `pt-BR`, …), then
-the bare language subtag (`pt-CV` → `pt-PT`), then `en-US`.
+the bare language subtag (`pt-CV` → `pt-PT`). No match is a `RangeError`.
 
 ## Why locales are plugins, not rows in one table
 
@@ -84,7 +108,7 @@ a new row.
 ```ts
 import { registerLocale, type OrdinalLocale } from 'ordinal-words';
 
-const es: OrdinalLocale = {
+const esES: OrdinalLocale = {
   code: 'es-ES',
   aliases: ['es'],
   min: 1,
@@ -93,16 +117,20 @@ const es: OrdinalLocale = {
   suffix: (value, options) => (options?.gender === 'feminine' ? '.ª' : '.º')
 };
 
-registerLocale(es);
+registerLocale(esES);
 ```
 
 ## Development
 
 ```bash
-npm run typecheck
-npm test
-npm run build
+npm run typecheck   # tsc --noEmit
+npm test            # node --test, no test framework installed
+npm run build       # tsc into dist/esm and dist/cjs, no bundler
 ```
+
+The only dev dependencies are `typescript` and `@types/node`. Tests run on Node's
+built-in runner against the TypeScript sources directly, using Node's native type
+stripping — hence `engines: node >= 22.18`.
 
 ## pt-PT: multiples of a thousand
 

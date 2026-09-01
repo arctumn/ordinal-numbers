@@ -1,4 +1,4 @@
-import type { OrdinalLocale, OrdinalOptions } from '../types';
+import type { OrdinalLocale, OrdinalOptions } from '../types.ts';
 
 const UNITS = ['', 'primeiro', 'segundo', 'terceiro', 'quarto', 'quinto', 'sexto', 'sétimo', 'oitavo', 'nono'];
 const TENS = ['', 'décimo', 'vigésimo', 'trigésimo', 'quadragésimo', 'quinquagésimo', 'sexagésimo', 'septuagésimo', 'octogésimo', 'nonagésimo'];

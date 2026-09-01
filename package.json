@@ -25,18 +25,38 @@
   },
   "homepage": "https://github.com/arctumn/ordinal-numbers#readme",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
       },
       "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./locales/en-US": {
+      "import": {
+        "types": "./dist/esm/locales/en-US.d.ts",
+        "default": "./dist/esm/locales/en-US.js"
+      },
+      "require": {
+        "types": "./dist/cjs/locales/en-US.d.ts",
+        "default": "./dist/cjs/locales/en-US.js"
+      }
+    },
+    "./locales/pt-PT": {
+      "import": {
+        "types": "./dist/esm/locales/pt-PT.d.ts",
+        "default": "./dist/esm/locales/pt-PT.js"
+      },
+      "require": {
+        "types": "./dist/cjs/locales/pt-PT.d.ts",
+        "default": "./dist/cjs/locales/pt-PT.js"
       }
     },
     "./package.json": "./package.json"
@@ -48,18 +68,17 @@
   ],
   "sideEffects": false,
   "engines": {
-    "node": ">=18"
+    "node": ">=22.18"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "node --test 'test/*.test.ts'",
+    "test:watch": "node --test --watch 'test/*.test.ts'",
     "prepublishOnly": "npm run typecheck && npm run test && npm run build"
   },
   "devDependencies": {
-    "tsup": "^8.5.0",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "@types/node": "^24.13.3",
+    "typescript": "^5.9.2"
   }
 }

@@ -1,4 +1,4 @@
-import type { OrdinalLocale, OrdinalOptions } from '../types';
+import type { OrdinalLocale, OrdinalOptions } from '../types.ts';
 
 const UNITS = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 const TEENS = [
