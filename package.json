@@ -16,7 +16,7 @@
     "en-US"
   ],
   "license": "ISC",
-  "author": "Pedro Lopes",
+  "author": "arctumn (https://github.com/arctumn)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arctumn/ordinal-words.git"

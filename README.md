@@ -173,4 +173,4 @@ other element.
 
 ## License
 
-ISC © Pedro Lopes
+ISC © arctumn
