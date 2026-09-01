@@ -103,12 +103,23 @@ npm test
 npm run build
 ```
 
-## Known open question
+## pt-PT: multiples of a thousand
 
-For pt-PT, multiples of a thousand are composed as ordinal multiplier + noun:
-`getOrdinalWord(2000, 'pt-PT')` returns `segundo milésimo`. Traditional grammars
-also accept *bimilésimo* and *dois milésimos*. If you prefer one of those, the
-rule lives in `src/locales/pt.ts` and affects nothing below 1000.
+Multiples of a thousand and of a million are composed as an ordinal multiplier
+followed by the noun, and the whole phrase inflects together:
+
+```ts
+getOrdinalWord(2000, 'pt-PT');                        // 'segundo milésimo'
+getOrdinalWord(15_000, 'pt-PT');                      // 'décimo quinto milésimo'
+getOrdinalWord(2500, 'pt-PT');                        // 'segundo milésimo quingentésimo'
+getOrdinalWord(2_000_000, 'pt-PT');                   // 'segundo milionésimo'
+getOrdinalWord(2000, 'pt-PT', { gender: 'feminine' }); // 'segunda milésima'
+```
+
+Traditional grammars also record *bimilésimo* and *dois milésimos* for 2000.º.
+This library uses the ordinal-multiplier form throughout, because it stays
+regular across the whole range and inflects for gender and number like every
+other element.
 
 ## License
 

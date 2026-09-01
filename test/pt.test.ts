@@ -26,6 +26,24 @@ describe('pt-PT words', () => {
     expect(words(1_000_000)).toBe('milionésimo');
   });
 
+  it('multiplies thousands and millions with an ordinal multiplier', () => {
+    expect(words(2000)).toBe('segundo milésimo');
+    expect(words(3000)).toBe('terceiro milésimo');
+    expect(words(15_000)).toBe('décimo quinto milésimo');
+    expect(words(100_000)).toBe('centésimo milésimo');
+    expect(words(2500)).toBe('segundo milésimo quingentésimo');
+    expect(words(2_000_000)).toBe('segundo milionésimo');
+    expect(words(21_000_000)).toBe('vigésimo primeiro milionésimo');
+    expect(getOrdinalWord(2000, 'pt-PT', { gender: 'feminine' })).toBe('segunda milésima');
+  });
+
+  it('spells the top of the range', () => {
+    expect(words(999_999_999)).toBe(
+      'nongentésimo nonagésimo nono milionésimo nongentésimo nonagésimo nono milésimo '
+      + 'nongentésimo nonagésimo nono'
+    );
+  });
+
   it('inflects for gender and number', () => {
     expect(getOrdinalWord(21, 'pt-PT', { gender: 'feminine' })).toBe('vigésima primeira');
     expect(getOrdinalWord(21, 'pt-PT', { plural: true })).toBe('vigésimos primeiros');
